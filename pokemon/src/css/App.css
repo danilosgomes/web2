@@ -1,0 +1,68 @@
+body {
+  font-family: 'Inter', sans-serif;
+}
+
+.custom-collapse {
+  width: 100%; /* Garante que a largura seja 100% */
+  margin-right: 0; /* Remove margens à direita */
+  padding-right: 0; /* Remove padding à direita */
+}
+
+.background-container {
+  position: relative;
+  height: 100vh; /* Altura total da tela */
+  overflow-y: auto; /* Para evitar que o pseudo-elemento saia do contêiner */
+}
+
+.background-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url("../assets/pokemon-chromebook-wallpaper.jpg"); /* Substitua pelo link da sua imagem */
+  background-size: cover; /* Cobrir toda a tela */
+  background-position: center; /* Centralizar a imagem */
+  opacity: 0.4; /* Ajuste a opacidade da imagem aqui */
+  z-index: -2; /* Garante que fique atrás da cor de sobreposição */
+}
+
+.background-container::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(34, 34, 34); /* Cor de sobreposição com opacidade */
+  z-index: -3; /* Garante que fique acima da imagem de fundo */
+}
+
+.nav-item {
+  margin-right: 40px; /* Define a margem à direita para 20px */
+}
+
+.nav-link {
+  color: #F3F3F3; /* Substitua pelo código da cor desejada */
+}
+
+.nav-link:hover {
+  color: #DC3131; /* Cor ao passar o mouse */
+}
+
+.Style-bold {
+  font-weight: 600; /* ou 700 para negrito mais forte */
+}
+
+.Style-regular {
+  font-weight: 400; /* ou 700 para negrito mais forte */
+}
+
+.Style-thin {
+  font-weight: 400; /* ou 700 para negrito mais forte */
+}
+
+.card-text {
+  margin: 0%;
+}
