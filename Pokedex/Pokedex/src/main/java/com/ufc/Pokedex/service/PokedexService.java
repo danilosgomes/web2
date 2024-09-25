@@ -69,4 +69,10 @@ public class PokedexService {
         pokedex.getPokemons().add(pokemon);
         return pokedexRepository.save(pokedex);
     }
+
+    public List<Pokemon> getPokemonByPokedexId(Long id) {
+        Pokedex pokedex = pokedexRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Pokedex not found"));
+        return pokedex.getPokemons();
+    }
 }

@@ -35,6 +35,11 @@ public class PokedexController {
         return pokedexService.getPokedexById(id);
     }
 
+    @GetMapping("/{pokedexId}/pokemon")
+    public List<Pokemon> getPokemonByPokedexId(@PathVariable Long id) {
+        return pokedexService.getPokemonByPokedexId(id);
+    }
+
     @PostMapping
     public Pokedex createPokedex(@RequestBody Pokedex pokedex) {
         return pokedexService.createPokedex(pokedex);
