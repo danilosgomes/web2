@@ -3,14 +3,11 @@ import "../css/App.css";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import pokemonImage from "../assets/International_Pokémon_logo.svg.png";
-import Header from "../components/Header";
-
 
 const Pokedex = () => {
   const [pokedexes, setPokedexes] = useState([]);
   const [newPokedexName, setNewPokedexName] = useState("");
   const [isCreating, setIsCreating] = useState(false);
-  const [editId, setEditId] = useState(null);
 
   // Efeito para buscar as Pokédexes do backend
   useEffect(() => {
@@ -23,7 +20,6 @@ const Pokedex = () => {
   // Função para adicionar uma nova Pokédex
   const handleCreatePokedex = () => {
     if (newPokedexName.trim()) {
-<<<<<<< HEAD
       fetch("http://localhost:8080/api/pokedex", {
         // Atualizando a rota aqui
         method: "POST",
@@ -39,53 +35,6 @@ const Pokedex = () => {
           setIsCreating(false);
         })
         .catch((error) => console.error("Erro ao criar Pokédex:", error));
-=======
-      if (editId !== null) {
-        // Se estiver no modo de edição
-        setPokedexes(
-          pokedexes.map(pokedex =>
-            pokedex.id === editId
-              ? { ...pokedex, name: newPokedexName }
-              : pokedex
-          )
-        );
-        setEditId(null);
-      } else {
-        setPokedexes([
-          ...pokedexes,
-          { id: pokedexes.length + 1, name: newPokedexName },
-        ]);
-      }
-      setNewPokedexName(""); 
-      setIsCreating(false);  
-    } else {
-      alert("Por favor, insira um nome para a Pokédex.");
-    }
-  };
-  
-
-  const handleDeletePokedex = (id) => {
-    setPokedexes(pokedexes.filter((pokedex) => pokedex.id !== id));
-  };
-
-  const handleEditPokedex = (id) => {
-    const elementToEdit = pokedexes.find(pokedex => pokedex.id === id);
-    setNewPokedexName(elementToEdit.name); 
-    setEditId(id); 
-  };
-  
-  const handleUpdatePokedex = () => {
-    if (newPokedexName.trim()) {
-      setPokedexes(
-        pokedexes.map(pokedex => 
-          pokedex.id === editId 
-            ? { ...pokedex, name: newPokedexName } 
-            : pokedex
-        )
-      );
-      setNewPokedexName("");
-      setEditId(null); 
->>>>>>> d6f8b8ba81e2ad8c23360b5b16a0baec4ccfa578
     } else {
       alert("Por favor, insira um nome para a Pokédex.");
     }
@@ -99,7 +48,6 @@ const Pokedex = () => {
       }}
     >
       {/* Menu de Navegação */}
-<<<<<<< HEAD
       <nav
         className="navbar navbar-expand-xxl bg-body-tertiary"
         style={{
@@ -160,9 +108,6 @@ const Pokedex = () => {
         </div>
       </nav>
 
-=======
-      <Header />
->>>>>>> d6f8b8ba81e2ad8c23360b5b16a0baec4ccfa578
       {/* Corpo da página */}
       <div
         className="text-center"
@@ -237,7 +182,6 @@ const Pokedex = () => {
           }}
         >
           {pokedexes.map((pokedex) => (
-<<<<<<< HEAD
             <Link
               key={pokedex.id}
               to={`/pokedex/${pokedex.name}`}
@@ -256,30 +200,6 @@ const Pokedex = () => {
             >
               <h5 style={{ margin: "0" }}>{pokedex.name}</h5>
             </Link>
-=======
-            <div style={{
-              flex: "1 1 calc(33.33% - 20px)", // 3 colunas por linha
-              maxWidth: "calc(33.33% - 20px)",
-              backgroundColor: "#fff",
-              borderRadius: "8px",
-              textAlign: "center",
-              padding: "20px",
-              cursor: "pointer",
-              textDecoration: "none", // Remove underline
-              color: "inherit", // Mantém a cor do texto
-              transition: "transform 0.3s ease",
-              zIndex: "0",
-            }}>
-              <Link style={{ textDecoration: "none", color: "#000"}} // Remove underline e mantém a cor do texto
-                key={pokedex.id}
-                to={`/pokedex/${pokedex.name}`} // Atualizado para passar o nome da Pokédex
-              >
-                <h5>{pokedex.name}</h5>
-              </Link>
-                <button className="btn btn-primary" style={{margin: "0 10px 0 0"}} onClick={() => {handleEditPokedex(pokedex.id); setIsCreating(true)}}>Editar</button>
-                <button className="btn btn-danger" onClick={() => handleDeletePokedex(pokedex.id)}>Deletar</button>
-            </div>
->>>>>>> d6f8b8ba81e2ad8c23360b5b16a0baec4ccfa578
           ))}
         </div>
       </div>
