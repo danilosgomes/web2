@@ -7,6 +7,7 @@ import com.ufc.Pokedex.repository.PokemonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,32 +29,31 @@ public class PokedexService {
                 .orElseThrow(() -> new RuntimeException("Pokedex not found"));
     }
 
+    public List<Pokemon> getPokemonByPokedexIdSortedByName(Long id) {
+        Pokedex pokedex = pokedexRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Pokedex not found"));
+        return pokedex.getPokemons().stream()
+                .sorted(Comparator.comparing(Pokemon::getName))
+                .collect(Collectors.toList());
+    }
+
+    public List<Pokemon> getPokemonByPokedexIdAndName(Long id, String name) {
+        Pokedex pokedex = pokedexRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Pokedex not found"));
+        return pokedex.getPokemons().stream()
+                .filter(pokemon -> pokemon.getName().equalsIgnoreCase(name))
+                .collect(Collectors.toList());
+    }
+
     public Pokedex createPokedex(Pokedex pokedex) {
         return pokedexRepository.save(pokedex);
     }
 
-    public Pokedex updatePokedex(Long id, Pokedex pokedexDetails) {
-        Pokedex pokedex = pokedexRepository.findById(id).orElseThrow();
 
-        // Atualizar o nome da Pokedex
-        pokedex.setName(pokedexDetails.getName());
-
-        // Obter IDs dos novos Pokemons
-        List<Long> newPokemonIds = pokedexDetails.getPokemons().stream()
-                .map(Pokemon::getId)
-                .collect(Collectors.toList());
-
-        // Remover Pokemons que não estão na nova lista
-        pokedex.getPokemons().removeIf(pokemon -> !newPokemonIds.contains(pokemon.getId()));
-
-        // Adicionar novos Pokemons
-        for (Pokemon newPokemon : pokedexDetails.getPokemons()) {
-            if (!pokedex.getPokemons().contains(newPokemon)) {
-                newPokemon.setPokedex(pokedex);
-                pokedex.getPokemons().add(newPokemon);
-            }
-        }
-
+    public Pokedex updatePokedexName(Long id, String newName) {
+        Pokedex pokedex = pokedexRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Pokedex not found"));
+        pokedex.setName(newName);
         return pokedexRepository.save(pokedex);
     }
 

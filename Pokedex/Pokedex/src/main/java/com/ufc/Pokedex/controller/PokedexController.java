@@ -1,5 +1,6 @@
 package com.ufc.Pokedex.controller;
 
+import com.ufc.Pokedex.repository.PokedexRepository;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -9,6 +10,7 @@ import com.ufc.Pokedex.service.PokedexService;
 import com.ufc.Pokedex.service.PokeApiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import java.util.Map;
 
 import java.util.List;
 
@@ -25,6 +27,9 @@ public class PokedexController {
     @Autowired
     private ObjectMapper objectMapper;
 
+    @Autowired
+    private PokedexRepository pokedexRepository;
+
     @GetMapping
     public List<Pokedex> getAllPokedex() {
         return pokedexService.getAllPokedex();
@@ -36,8 +41,18 @@ public class PokedexController {
     }
 
     @GetMapping("/{pokedexId}/pokemon")
-    public List<Pokemon> getPokemonByPokedexId(@PathVariable Long id) {
-        return pokedexService.getPokemonByPokedexId(id);
+    public List<Pokemon> getPokemonByPokedexId(@PathVariable Long pokedexId) {
+        return pokedexService.getPokemonByPokedexId(pokedexId);
+    }
+
+    @GetMapping("/{pokedexId}/pokemon/sorted")
+    public List<Pokemon> getPokemonByPokedexIdSortedByName(@PathVariable Long pokedexId) {
+        return pokedexService.getPokemonByPokedexIdSortedByName(pokedexId);
+    }
+
+    @GetMapping("/{pokedexId}/pokemon/name/{name}")
+    public List<Pokemon> getPokemonByPokedexIdAndName(@PathVariable Long pokedexId, @PathVariable String name) {
+        return pokedexService.getPokemonByPokedexIdAndName(pokedexId, name);
     }
 
     @PostMapping
@@ -45,9 +60,10 @@ public class PokedexController {
         return pokedexService.createPokedex(pokedex);
     }
 
-    @PutMapping("/{id}")
-    public Pokedex updatePokedex(@PathVariable Long id, @RequestBody Pokedex pokedexDetails) {
-        return pokedexService.updatePokedex(id, pokedexDetails);
+    @PutMapping("/{id}/name")
+    public Pokedex updatePokedexName(@PathVariable Long id, @RequestBody Map<String, String> request) {
+        String newName = request.get("name");
+        return pokedexService.updatePokedexName(id, newName);
     }
 
     @DeleteMapping("/{id}")
