@@ -19,3 +19,6 @@ public class Pokedex {
     @OneToMany(mappedBy = "pokedex", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Pokemon> pokemons;
 }
+
+
+

@@ -27,3 +27,6 @@ public class Pokemon {
     @JsonIgnore
     private Pokedex pokedex;
 }
+
+
+
